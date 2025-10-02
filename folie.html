@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Folie</title>
+
+    <!-- UnoCSS CDN quickstart (development/demo). For production integrate UnoCSS in your build. -->
+    <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/uno.global.js"></script>
+
+    <!-- Minimal additional CSS for print handling, sticky header fallback and a few accessibility tweaks -->
+    <style>
+        /* Basic page background + typography fallback in case UnoCSS isn't loaded */
+        :root {
+            --page-bg: rgba(250, 250, 250, 1);
+            --gradient-base: rgba(250, 250, 250, 0.9);
+            --gradient-end: rgba(250, 250, 250, 0.9);
+            --blur-radius: 0.5rem;
+            --muted: #6b7280;
+            --accent: #111827;
+        }
+        .images img {   
+            object-fit: contain;
+        }
+
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: var(--page-bg);
+            color: var(--accent);
+            line-height: 1.5;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Container and content area */
+        main {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.25rem;
+        }
+
+        /* Section card look */
+        section {
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+            margin: 1rem 0;
+            overflow: visible;
+        }
+
+        section header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            height: 4.5rem;
+            background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
+            backdrop-filter: blur(0.5rem);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+            padding: 0 4rem;
+        }
+        article header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 4.5rem;
+            z-index: 20;
+            background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
+            backdrop-filter: blur(0.5rem);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            flex-wrap: wrap;
+            margin: 0 -1rem;
+            padding: 0 4rem;
+        }
+        article header h2, article header h3 {
+            white-space: nowrap;
+        }
+        .jobs-nav {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+            gap: 1rem;
+            border-bottom: solid 1px var(--gradient-base);
+            background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
+            backdrop-filter: blur(0.5rem);
+        }
+        .jobs-nav a {
+            text-decoration: none;
+            border-bottom: 1px dashed var(--muted);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Folie</h1>
+    <h2>Sample Works</h2>
+    <nav role="menu" class="jobs-nav">
+        <header>Storyboarding</header>
+        <a href="#job-1">Job 1</a>
+        <a href="#job-2">Job 2</a>
+    </nav>
+    <nav role="menu" class="jobs-nav">
+        <header>Illustration</header>
+        <a href="#job-1">Job 1</a>
+        <a href="#job-2">Job 2</a>
+    </nav>
+    <section>
+        <header class="flex justify-between col-gap-4 row-gap-8 px-4 items-baseline">
+            <h2>Storyboarding</h2>
+            <h3 class="subheading">
+                Subhead
+            </h3>
+        </header>
+        <article>
+            <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline">
+
+                <h2>
+                    <a id="job-1">Job</a>
+                </h2>
+                <h3 class="subheading flex-grow text-center">
+                    Client
+                </h3>
+                <h3 class="subheading flex-grow right">
+                    Project / Year
+                </h3>
+            </header>
+            <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                <img src="https://unsplash.it/960/720?image=1" alt="Image" class="w-full col-span-2 lg:col-span-1">
+                <img src="https://unsplash.it/960/720?image=2" alt="Image" class="w-full col-span-2 lg:col-span-1">
+                <figure class="col-span-2 m-0">
+                    <img src="https://unsplash.it/960/720?image=3" alt="Image" class="w-full h-auto">
+                    <figcaption>
+                        Caption
+                    </figcaption>
+                </figure>
+                <img src="https://unsplash.it/960/720?image=4" alt="Image" class="w-full">
+                <img src="https://unsplash.it/960/720?image=5" alt="Image" class="w-full">
+                <img src="https://unsplash.it/960/720?image=6" alt="Image" class="w-full">
+                <img src="https://unsplash.it/960/720?image=7" alt="Image" class="w-full">
+                <img src="https://unsplash.it/960/720?image=8" alt="Image" class="w-full">
+                <img src="https://unsplash.it/960/720?image=9" alt="Image" class="w-full">
+                <img src="https://unsplash.it/960/720?image=10" alt="Image" class="w-full h-auto">
+
+            </div>
+        </article>
+        <article>
+            <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                <h2>
+                    <a id="job-2">Another Job</a></h2>
+                <h3 class="subheading flex-grow text-center">
+                    Another Client
+                </h3>
+                <h3 class="subheading flex-grow text-right">
+                    Some Project / 2026
+                </h3>
+            </header>
+            <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                <img src="https://unsplash.it/960/720?image=1" alt="Image" class="w-full flex-1 basis-full lg:basis-[calc(50%-0.5rem)]">
+                <img src="https://unsplash.it/960/720?image=2" alt="Image" class="w-full col-span-2 lg:col-span-1">
+                <img src="https://unsplash.it/960/720?image=3" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=4" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=5" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=6" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=7" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=8" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=9" alt="Image" class="w-full col-span-1 lg:col-span-2">
+                <img src="https://unsplash.it/960/720?image=10" alt="Image" class="w-full h-auto col-span-1 lg:col-span-2">
+
+            </div>
+        </article>
+    </section>
+</main>
+</body>
+</html>
