@@ -22,7 +22,8 @@
             --heading-font: "Permanent Marker", cursive;
             --body-font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
         }
-        .images img {   
+
+        .images img {
             object-fit: contain;
         }
 
@@ -45,22 +46,25 @@
         main > h1, main > h2, main > h3 {
             font-family: var(--heading-font), cursive;
             color: var(--accent);
-            
+
         }
+
         section > header h1, section > header h2, section > header h3 {
             font-family: var(--heading-font), cursive;
             color: var(--muted);
-
+            padding: 0 1rem;
         }
+
         article header h1, article header h2, article header h3 {
             font-family: var(--heading-font), cursive;
-            color: #333;
-            
+            padding: 0 1rem;
+
         }
 
         article header h3 {
             color: var(--muted);
         }
+
         /* Section card look */
         section {
             border-radius: 8px;
@@ -83,6 +87,7 @@
             padding: 0 4rem;
             color: var(--muted);
         }
+
         article header {
             position: -webkit-sticky;
             position: sticky;
@@ -95,9 +100,11 @@
             margin: 0 -1rem;
             padding: 0 4rem;
         }
+
         article header h2, article header h3 {
             white-space: nowrap;
         }
+
         .jobs-nav {
             display: flex;
             flex-wrap: wrap;
@@ -107,9 +114,17 @@
             background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
             backdrop-filter: blur(0.5rem);
         }
+
         .jobs-nav a {
             text-decoration: none;
             border-bottom: 1px dashed var(--muted);
+        }
+
+        .raised-card {
+            border-radius: 0.66rem;
+            background: white;
+            margin: 1rem 0;
+            box-shadow: 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
@@ -162,17 +177,23 @@
                 <img src="https://files.raptor.ink/Storyboard/hcv-story-2.JPG" alt="Image" class="w-full col-span-2 lg:col-span-1">-->
                 <figure class="col-span-2 m-0">
                     <img src="https://files.raptor.ink/Storyboard/hcv-story-1.JPG" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/Storyboard/hcv-story-2.JPG" alt="Image" class="w-full h-auto">
                     <figcaption>
                         Caption
                     </figcaption>
                 </figure>
-                <img src="https://files.raptor.ink/Storyboard/hcv-story-3.JPG" alt="Image" class="w-full">
-                <img src="https://files.raptor.ink/Storyboard/hcv-story-4.JPG" alt="Image" class="w-full">
-                <img src="https://files.raptor.ink/Storyboard/hcv-story-5.JPG" alt="Image" class="w-full">
-                <img src="https://files.raptor.ink/Storyboard/hcv-story-6.JPG" alt="Image" class="w-full">
-                <img src="https://files.raptor.ink/Storyboard/hcv-story-7.jpg" alt="Image" class="w-full">
-                <img src="https://files.raptor.ink/Storyboard/hcv-story-8.jpg" alt="Image" class="w-full">
+                <figure class="col-span-2 m-0">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-2.JPG"
+                                                    alt="Image" class="w-full h-auto">
+                    <figcaption>
+                        Caption
+                    </figcaption>
+                </figure>
+                <img src="https://files.raptor.ink/Storyboard/hcv-story-3.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/Storyboard/hcv-story-4.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/Storyboard/hcv-story-5.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/Storyboard/hcv-story-6.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/Storyboard/hcv-story-7.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/Storyboard/hcv-story-8.jpg" alt="Image" class="w-full h-auto">
                 <img src="https://files.raptor.ink/Storyboard/hcv-story-9.JPG" alt="Image" class="w-full h-auto">
                 <img src="https://files.raptor.ink/Storyboard/hcv-story-10.JPG" alt="Image" class="w-full h-auto">
 
@@ -190,16 +211,23 @@
                 </h3>
             </header>
             <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_5.jpeg" alt="Image" class="w-full h-auto">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_6.jpeg" alt="Image" class="w-full h-auto">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_7.jpeg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_5.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_6.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_7.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
             </div>
             <div class="images grid grid-cols-1 lg:grid-cols-4 gap-4 col-gap-4 p-4">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_1.jpeg" alt="Image" class="w-full h-auto">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_2.jpeg" alt="Image" class="w-full h-auto">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_3.jpeg" alt="Image" class="w-full h-auto">
-                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_4.jpeg" alt="Image" class="w-full h-auto">
-        
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_1.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_2.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_3.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
+                <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_4.jpeg" alt="Image"
+                     class="w-full h-auto raised-card">
+
             </div>
         </article>
         <article>
@@ -217,7 +245,7 @@
                 <figure class="col-span-2 m-0">
                     <img src="https://files.raptor.ink/chokisbus.jpg" alt="Image" class="w-full h-auto">
                 </figure>
-        
+
             </div>
         </article>
         <article>
@@ -233,9 +261,10 @@
             </header>
             <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
                 <figure class="col-span-2 m-0">
-                    <img src="https://files.raptor.ink/when%20are%20you%20having%20kids.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/when%20are%20you%20having%20kids.jpg" alt="Image"
+                         class="w-full h-auto">
                 </figure>
-        
+
             </div>
         </article>
         <article>
@@ -280,9 +309,9 @@
                 </h3>
             </header>
             <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
-                    <img src="https://files.raptor.ink/1-walkies-time-sketch.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/walkies-time.jpg" alt="Image" class="w-full h-auto">
-        
+                <img src="https://files.raptor.ink/1-walkies-time-sketch.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/walkies-time.jpg" alt="Image" class="w-full h-auto">
+
             </div>
         </article>
         <article>
@@ -290,7 +319,7 @@
                 <h2>
                     <a id="job-11">Game Storyboard Example</a></h2>
                 <h3 class="subheading flex-grow text-center">
-                    
+
                 </h3>
                 <h3 class="subheading flex-grow text-right">
                     2025
@@ -300,7 +329,7 @@
                 <figure class="col-span-2 m-0">
                     <img src="https://files.raptor.ink/Storyboard%20sketch.jpg" alt="Image" class="w-full h-auto">
                 </figure>
-        
+
             </div>
         </article>
     </section>
@@ -405,19 +434,19 @@
                     Client - Variety
                 </h3>
                 <h3 class="subheading flex-grow text-right">
-                
+
                 </h3>
             </header>
             <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
-                    <img src="https://files.raptor.ink/animal-art-1.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/animal-art-2.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/animal-art-3.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/character-art-1.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/character-art-2.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/character-art-3.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/bw-port-1.JPG" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/bw-port-2.JPG" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/bw-port-3.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/animal-art-1.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/animal-art-2.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/animal-art-3.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/character-art-1.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/character-art-2.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/character-art-3.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/bw-port-1.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/bw-port-2.JPG" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/bw-port-3.JPG" alt="Image" class="w-full h-auto">
 
             </div>
         </article>
@@ -429,17 +458,17 @@
                     Client - Variety
                 </h3>
                 <h3 class="subheading flex-grow text-right">
-                
+
                 </h3>
             </header>
             <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
-                    <img src="https://files.raptor.ink/illies/overkloof.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/illies/radicle-mass.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/illies/overkloof.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/illies/radicle-mass.jpg" alt="Image" class="w-full h-auto">
             </div>
             <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
-                    <img src="https://files.raptor.ink/illies/pangolin-punk.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/illies/vermicult.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/illies/leon.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/illies/pangolin-punk.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/illies/vermicult.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/illies/leon.jpg" alt="Image" class="w-full h-auto">
             </div>
         </article>
         <article>
@@ -450,7 +479,7 @@
                     Client - Variety
                 </h3>
                 <h3 class="subheading flex-grow text-right">
-                
+
                 </h3>
             </header>
             <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
@@ -459,10 +488,10 @@
                 </figure>
             </div>
             <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
-                    <img src="https://files.raptor.ink/edu/le-corps.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/edu/le-squellet.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/edu/les-organes.jpg" alt="Image" class="w-full h-auto">
-                    <img src="https://files.raptor.ink/edu/zbodyguide_skeleton.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/edu/le-corps.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/edu/le-squellet.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/edu/les-organes.jpg" alt="Image" class="w-full h-auto">
+                <img src="https://files.raptor.ink/edu/zbodyguide_skeleton.jpg" alt="Image" class="w-full h-auto">
 
             </div>
         </article>
