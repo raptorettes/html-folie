@@ -1,296 +1,500 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Single page — sticky section headers + print two-column</title>
-
-    <!-- UnoCSS CDN quickstart (development/demo). For production integrate UnoCSS in your build. -->
-    <script type="module">
-      // Lightweight UnoCSS runtime for dev/demo. Replace with your build-time UnoCSS in production.
-      import 'https://cdn.jsdelivr.net/npm/@unocss/reset/tailwind.css';
-      import 'https://cdn.jsdelivr.net/npm/unocss@0.61.10/dist/unocss.mjs';
-    </script>
-
-    <!-- Minimal additional CSS for print handling, sticky header fallback and a few accessibility tweaks -->
-    <style>
-      /* Basic page background + typography fallback in case UnoCSS isn't loaded */
-      :root {
-        --page-bg: #fafafa;
-        --muted: #6b7280;
-        --accent: #111827;
-      }
-      body {
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
-          Roboto, 'Helvetica Neue', Arial;
-        background: var(--page-bg);
-        color: var(--accent);
-        line-height: 1.5;
-        margin: 0;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      /* Container and content area */
-      .container {
-        max-width: 960px;
-        margin: 0 auto;
-        padding: 1.25rem;
-      }
-
-      /* Section card look */
-      .section {
-        border-radius: 8px;
-        background: white;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
-        margin: 1rem 0;
-        overflow: visible;
-      }
-
-      /* Sticky header fallback */
-      .section-header {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.95),
-          rgba(255, 255, 255, 0.9)
-        );
-        backdrop-filter: blur(2px);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.04);
-      }
-
-      /* Print styles: two columns, prevent splitting of sections across columns/pages,
-       and make each section start at a new column (so sections break cleanly).
-       Also set sensible page size / margins. */
-      @media print {
-        @page {
-          size: A4;
-          margin: 18mm;
-        }
-        html,
-        body {
-          background: none !important;
-          color: #000;
-        }
-
-        /* Make the printed flow two columns */
-        .container {
-          max-width: 100%;
-          padding: 0;
-          /* two columns on print */
-          column-count: 2;
-          column-gap: 24px;
-        }
-
-        /* Keep a section together and start it at a column boundary */
-        .section {
-          /* avoid splitting inside a column */
-          break-inside: avoid-column;
-          -webkit-column-break-inside: avoid;
-          -moz-column-break-inside: avoid;
-          /* avoid page break inside */
-          page-break-inside: avoid;
-          /* make each section start at a column start (new column) except possibly the first */
-        }
-        /* force a column break before every section except the first, so sections don't flow across columns */
-        .section:not(:first-child) {
-          break-before: column;
-          -webkit-column-break-before: always;
-          page-break-before: always;
-        }
-
-        /* Remove sticky behaviour in print (redundant but explicit) */
-        .section-header {
-          position: static !important;
-          background: transparent !important;
-          border-bottom: none !important;
-          padding: 0;
-        }
-
-        /* Titles: slightly larger in print */
-        h2 {
-          font-size: 1.05rem;
-          margin: 0 0 0.4rem 0;
-        }
-        p {
-          orphans: 3;
-          widows: 3;
-        }
-
-        /* Don't show the live-only controls if any */
-        .no-print {
-          display: none !important;
-        }
-      }
-
-      /* Accessibility: reduce motion for people who prefer reduced motion */
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          transition: none !important;
-          animation: none !important;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Page header -->
-    <header class="no-print p-4 border-b bg-white sticky top-0 z-30">
-      <div class="container flex items-center justify-between">
-        <h1 class="text-lg font-semibold">
-          Document — Sticky sections + Print two-column
-        </h1>
-        <nav class="text-sm text-slate-600">
-          <a href="#sec-1" class="mr-3">Intro</a>
-          <a href="#sec-2" class="mr-3">Details</a>
-          <a href="#sec-3" class="mr-3">More</a>
-          <a href="#sec-4">Appendix</a>
-        </nav>
-      </div>
-    </header>
-
-    <!-- Main content container -->
-    <main class="container" role="main">
-      <!-- Example sections: each section has a sticky header which will stick as you scroll -->
-      <section id="sec-1" class="section">
-        <div class="section-header p-3">
-          <h2 class="text-base font-medium">1 — Introduction</h2>
-          <p class="text-xs text-slate-500">Overview and goals</p>
-        </div>
-        <div class="p-4">
-          <p>
-            This single-page layout demonstrates: sticky section headers that
-            remain visible while scrolling, responsive layout for mobile and
-            desktop, and print-specific rules that present the content in two
-            printed columns while keeping sections intact (sections start in a
-            new column).
-          </p>
-          <p>
-            The live site uses UnoCSS utility classes for spacing, typography
-            and layout. The print stylesheet handles column layout and
-            section-breaking rules so printed output is tidy and readable.
-          </p>
-        </div>
-      </section>
-
-      <section id="sec-2" class="section">
-        <div class="section-header p-3">
-          <h2 class="text-base font-medium">2 — Details & Examples</h2>
-          <p class="text-xs text-slate-500">How it works</p>
-        </div>
-        <div class="p-4">
-          <p>
-            Sticky headers are achieved via
-            <code>position: sticky; top: 0;</code>. The header has a subtle
-            background and border so text remains legible when it overlaps
-            content.
-          </p>
-          <p>
-            For print, we set <code>column-count: 2</code> on the main container
-            and then ensure each <code>.section</code> has
-            <code>break-inside: avoid-column</code> so sections do not split
-            across columns. In addition we use
-            <code>break-before: column</code> on non-first sections to force
-            each section to start at a new column, which yields clean section
-            boundaries in the printed output.
-          </p>
-          <ul class="mt-2 ml-4">
-            <li>
-              Responsive: single column on small screens, natural stacking on
-              small widths
-            </li>
-            <li>Accessible: reduced motion respected</li>
-            <li>Practical: minimal shadow and border for a "plainish" look</li>
-          </ul>
-        </div>
-      </section>
-
-      <section id="sec-3" class="section">
-        <div class="section-header p-3">
-          <h2 class="text-base font-medium">3 — Content Block</h2>
-          <p class="text-xs text-slate-500">
-            Longer content to show column behaviour
-          </p>
-        </div>
-        <div class="p-4">
-          <!-- filler paragraphs to simulate long content -->
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
-            risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing
-            nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas
-            ligula massa, varius a, semper congue, euismod non, mi. Proin
-            porttitor, orci nec nonummy molestie, enim est eleifend mi, non
-            fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa,
-            scelerisque vitae, consequat in, pretium a, enim. Pellentesque
-            congue.
-          </p>
-          <p>
-            Ut in risus volutpat libero pharetra tempor. Cras vestibulum
-            bibendum augue. Praesent egestas leo in pede. Praesent blandit odio
-            eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum
-            ante ipsum primis in faucibus orci luctus et ultrices posuere
-            cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque
-            fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
-          </p>
-          <p>
-            Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi.
-            Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu,
-            consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-            viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus
-            varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies
-            nisi vel augue.
-          </p>
-        </div>
-      </section>
-
-      <section id="sec-4" class="section">
-        <div class="section-header p-3">
-          <h2 class="text-base font-medium">4 — Appendix & Notes</h2>
-          <p class="text-xs text-slate-500">Implementation notes</p>
-        </div>
-        <div class="p-4">
-          <p>Implementation tips:</p>
-          <ol class="ml-4">
-            <li>
-              For real projects, compile UnoCSS at build-time to purge unused
-              utilities and enable custom presets.
-            </li>
-            <li>
-              Adjust <code>@page</code> and margins to match your target paper
-              size (A4, Letter, etc.).
-            </li>
-            <li>
-              If you want each section to always start on a new page instead of
-              a column, change <code>break-before: column</code> to
-              <code>page-break-before: always</code> or
-              <code>break-before: page</code> inside the print media query.
-            </li>
-          </ol>
-        </div>
-      </section>
-    </main>
-
-    <!-- small demo-only script to show currently visible section (optional) -->
-    <script>
-      // Optional: highlight the sticky header when it sticks (purely visual, no UnoCSS dependency)
-      const headers = document.querySelectorAll('.section-header');
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((e) => {
-            const hdr = e.target;
-            if (!e.isIntersecting) {
-              hdr.classList.add('stuck');
-            } else {
-              hdr.classList.remove('stuck');
+    <!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1"/>
+        <title>Rene van Heerden</title>
+        <!-- UnoCSS CDN quickstart (development/demo). For production integrate UnoCSS in your build. -->
+        <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/uno.global.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+        <!-- Minimal additional CSS for print handling, sticky header fallback and a few accessibility tweaks -->
+        <style>
+            /* Basic page background + typography fallback in case UnoCSS isn't loaded */
+            :root {
+                --page-bg: rgba(250, 250, 250, 1);
+                --gradient-base: rgba(250, 250, 250, 0.9);
+                --gradient-end: rgba(250, 250, 250, 0.9);
+                --blur-radius: 1rem;
+                --muted: #6b7280;
+                --accent: rgba(70, 110, 110, 1);
+                --heading-font: "Permanent Marker", cursive;
+                --body-font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
             }
-          });
-        },
-        { threshold: [1] }
-      );
-
-      headers.forEach((h) => obs.observe(h));
-    </script>
-  </body>
-</html>
+    
+            .images img {
+                object-fit: contain;
+            }
+    
+            body {
+                font-family: var(--body-font);
+                background: var(--page-bg);
+                line-height: 1.5;
+                margin: 0;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+    
+            /* Container and content area */
+            main {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 1.25rem;
+            }
+    
+            main > h1, main > h2, main > h3 {
+                font-family: var(--heading-font), cursive;
+                color: var(--accent);
+    
+            }
+    
+            section > header h1, section > header h2, section > header h3 {
+                font-family: var(--heading-font), cursive;
+                color: var(--muted);
+                padding: 0 1rem;
+            }
+    
+            article header h1, article header h2, article header h3 {
+                font-family: var(--heading-font), cursive;
+                padding: 0 1rem;
+    
+            }
+    
+            article header h3 {
+                color: var(--muted);
+            }
+    
+            /* Section card look */
+            section {
+                border-radius: 8px;
+                background: white;
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+                margin: 1rem 0;
+                overflow: visible;
+            }
+    
+            section > header {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 0;
+                z-index: 20;
+                height: 4.5rem;
+                background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
+                backdrop-filter: blur(0.5rem);
+                flex-wrap: wrap;
+                margin: 0 -1rem;
+                padding: 0 4rem;
+                color: var(--muted);
+            }
+    
+            article header {
+                position: -webkit-sticky;
+                position: sticky;
+                top: 4.5rem;
+                z-index: 10;
+                background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
+                backdrop-filter: blur(0.5rem);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+                flex-wrap: wrap;
+                margin: 0 -1rem;
+                padding: 0 4rem;
+            }
+    
+            article header h2, article header h3 {
+                white-space: nowrap;
+            }
+    
+            .jobs-nav {
+                display: flex;
+                flex-wrap: wrap;
+                padding: 0.5rem;
+                gap: 1rem;
+                border-bottom: solid 1px var(--gradient-base);
+                background: linear-gradient(180deg, var(--gradient-base), var(--gradient-end));
+                backdrop-filter: blur(0.5rem);
+            }
+    
+            .jobs-nav a {
+                text-decoration: none;
+                border-bottom: 1px dashed var(--muted);
+            }
+    
+            .raised-card {
+                border-radius: 0.66rem;
+                background: white;
+                margin: 1rem 0;
+                box-shadow: 0.25rem 0.25rem 0 rgba(0, 0, 0, 0.05);
+            }
+        </style>
+    </head>
+    <body>
+    <main>
+        <h1>Rene van Heerden</h1>
+        <h2>Portfolio</h2>
+        <nav role="menu" class="jobs-nav">
+            <header>Storyboarding</header>
+            <a href="#job-1">HCV story</a>
+            <a href="#job-2">HCV socials</a>
+            <a href="#job-3">Bus from Hell</a>
+            <a href="#job-4">Kids</a>
+            <a href="#job-9">Dutch Lady Advert</a>
+            <a href="#job-10">Walkies Time</a>
+            <a href="#job-11">Game Storyboard</a>
+        </nav>
+        <nav role="menu" class="jobs-nav">
+            <header>Illustration</header>
+            <a href="#job-5">Snack Box</a>
+            <a href="#job-6">Hadeda</a>
+            <a href="#job-7">Noetic</a>
+            <a href="#job-8">Zoic</a>
+            <a href="#job-12">Character Art</a>
+            <a href="#job-13">Illustrations</a>
+            <a href="#job-14">Educational</a>
+    
+        </nav>
+        <section>
+            <header class="flex justify-between col-gap-4 row-gap-8 px-4 items-baseline">
+                <h2>Storyboarding</h2>
+                <!--<h3 class="subheading">
+                    Subhead
+                </h3>-->
+            </header>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline">
+                    <h2>
+                        <a id="job-1">Hepatitis C Virus storyboard</a>
+                    </h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Treatment Action Group
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <!--<img src="https://files.raptor.ink/Storyboard/hcv-story-1.JPG" alt="Image" class="w-full col-span-2 lg:col-span-1">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-2.JPG" alt="Image" class="w-full col-span-2 lg:col-span-1">-->
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/Storyboard/hcv-story-1.JPG" alt="Image" class="w-full h-auto">
+                        <figcaption>
+                            Caption
+                        </figcaption>
+                    </figure>
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/Storyboard/hcv-story-2.JPG"
+                                                        alt="Image" class="w-full h-auto">
+                        <figcaption>
+                            Caption
+                        </figcaption>
+                    </figure>
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-3.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-4.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-5.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-6.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-7.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-8.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-9.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Storyboard/hcv-story-10.JPG" alt="Image" class="w-full h-auto">
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-2">Hepatitis C Virus Social Media Posts</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Treatment Action Group
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_5.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_6.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_7.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+                </div>
+                <div class="images grid grid-cols-1 lg:grid-cols-4 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_1.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_2.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_3.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+                    <img src="https://files.raptor.ink/Hcv/tag_hcv_socialmedia_4.jpeg" alt="Image"
+                         class="w-full h-auto raised-card">
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-3">Bus from Hell</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Chokis
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/chokisbus.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-4">When are you having kids?</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Chokis
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/when%20are%20you%20having%20kids.jpg" alt="Image"
+                             class="w-full h-auto">
+                    </figure>
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-9">Dutch Lady Advert</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - M&C Saatchi Africa
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2017
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-4 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/dutchlady/dl-roughs-1.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-roughs-4.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-roughs-2.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-roughs-3.jpg" alt="Image" class="w-full h-auto">
+                </div>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/dutchlady/dl-bw-1.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-bw-3.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-bw-2.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-bw-4.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-color-1.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-billboards-1b.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-color-3.jpeg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/dutchlady/dl-color-2.jpeg" alt="Image" class="w-full h-auto">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/dutchlady/dl-billboards-2.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-10">Walkies Time</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Bobbin Bird
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2020
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/1-walkies-time-sketch.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/walkies-time.jpg" alt="Image" class="w-full h-auto">
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-11">Game Storyboard Example</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+    
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/Storyboard%20sketch.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+    
+                </div>
+            </article>
+        </section>
+        <section>
+            <header class="flex justify-between col-gap-4 row-gap-8 px-4 items-baseline">
+                <h2>Illustration</h2>
+                <h3 class="subheading">
+                    Subhead
+                </h3>
+            </header>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-5">Snack Box</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - QWRK.DEV
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/snack%20how.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+                    <img src="https://files.raptor.ink/Snackgif.GIF" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/snack%20doodles.jpg" alt="Image" class="w-full h-auto">
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-6">Hadeda</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - QWRK.DEV
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2025
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/Hadeda%20icons.jpg" alt="Image" class="w-full h-auto">
+                        <img src="https://files.raptor.ink/Hadeda%20bg.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+                    <img src="https://files.raptor.ink/Hadeda%20birds%202.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Hadeda%20birds.jpg" alt="Image" class="w-full h-auto">
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-8">Zoic</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - QWRK.DEV
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2018
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-4 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/Zoic/zoic-mock.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Zoic/zoic-mock-1.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Zoic/zoic-mock-2.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Zoic/zoic-mock-3.jpg" alt="Image" class="w-full h-auto">
+                </div>
+                <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/Zoic/zoic-illie-1.png" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Zoic/zoic-illie-2.png" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/Zoic2.jpg" alt="Image" class="w-full h-auto">
+                </div>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/Zoic.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-7">Noetic Work</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Noetic Enterprises
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+                        2023
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/Noetic2.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-12">Character Art</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Variety
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+    
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/animal-art-1.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/animal-art-2.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/animal-art-3.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/character-art-1.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/character-art-2.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/character-art-3.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/bw-port-1.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/bw-port-2.JPG" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/bw-port-3.JPG" alt="Image" class="w-full h-auto">
+    
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-13">Illustrations</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Variety
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+    
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/illies/overkloof.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/illies/radicle-mass.jpg" alt="Image" class="w-full h-auto">
+                </div>
+                <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/illies/pangolin-punk.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/illies/vermicult.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/illies/leon.jpg" alt="Image" class="w-full h-auto">
+                </div>
+            </article>
+            <article>
+                <header class="flex h-auto justify-between col-gap-4 row-gap-8 px-4 items-baseline flex-wrap">
+                    <h2>
+                        <a id="job-14">Educational</a></h2>
+                    <h3 class="subheading flex-grow text-center">
+                        Client - Variety
+                    </h3>
+                    <h3 class="subheading flex-grow text-right">
+    
+                    </h3>
+                </header>
+                <div class="images grid grid-cols-1 lg:grid-cols-2 gap-4 col-gap-4 p-4">
+                    <figure class="col-span-2 m-0">
+                        <img src="https://files.raptor.ink/edu/featured-masks-mockup.jpg" alt="Image" class="w-full h-auto">
+                    </figure>
+                </div>
+                <div class="images grid grid-cols-1 lg:grid-cols-3 gap-4 col-gap-4 p-4">
+                    <img src="https://files.raptor.ink/edu/le-corps.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/edu/le-squellet.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/edu/les-organes.jpg" alt="Image" class="w-full h-auto">
+                    <img src="https://files.raptor.ink/edu/zbodyguide_skeleton.jpg" alt="Image" class="w-full h-auto">
+    
+                </div>
+            </article>
+    </main>
+    </body>
+    </html>
